@@ -10,7 +10,7 @@ CREATE TABLE products(
     department_name VARCHAR(20) NOT NULL,
     price DEC(10, 2) NOT NULL,
     stock_quantity INT(10),
-    PRIMARY KEY (id)
+    PRIMARY KEY (item_id)
 );
 
 INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES
@@ -24,3 +24,5 @@ INSERT INTO products (product_name, department_name, price, stock_quantity) VALU
 ("Roomba RoboVac", "Home Goods", 299.99, 75),
 ("Popeyes Chicken Sandwich", "Food & Grocery", 1000.00, 0),
 ("Mystery Box", "Misc", 100.00, 1);
+
+SELECT * FROM products;

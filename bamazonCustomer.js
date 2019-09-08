@@ -43,7 +43,7 @@ function promptCust(){
         {
             name: "whatToBuy",
             type: "input",
-            message: "Enter the No. of the item you would like to purchage: "
+            message: "Enter the No. of the item you would like to purchase: "
         },
         {
             name: "howMany",

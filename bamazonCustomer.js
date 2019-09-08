@@ -4,6 +4,7 @@ var dbAuth = require("./dbAuth.js");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var clear = require("clear");
+var colors = require("colors");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -27,6 +28,7 @@ function main(){
 function displayAllProducts(){
     connection.query("SELECT * FROM products", (err, resp) => {
         if(err) throw err;
+        console.log(colors.bgWhite.blue.bold.underline("  MAIN MENU  "));
         resp.forEach(element => {
             console.log(`${element.item_id}) ${element.product_name} - $${element.price}`);
         });
@@ -35,7 +37,6 @@ function displayAllProducts(){
     
         promptCust();
     });
-    
 }
 
 function promptCust(){
@@ -43,7 +44,7 @@ function promptCust(){
         {
             name: "whatToBuy",
             type: "input",
-            message: "Enter the No. of the item you would like to purchase: "
+            message: "Enter the No. of the item you would like to purchase" + colors.gray(" ([CRTL]+[C] to quit): ")
         },
         {
             name: "howMany",
@@ -53,7 +54,7 @@ function promptCust(){
     ]).then(resp => {
         if (isNaN(parseInt(resp.whatToBuy)) || isNaN(parseInt(resp.howMany))){
             clear();
-            console.log("\n\n************************\nInvalid Selection/Entry!\n************************\n");
+            console.log(colors.bold.bgYellow.red("\n\n************************\nInvalid Selection/Entry!\n************************\n"));
             main();
         }else{
             makePurchase(resp.whatToBuy, resp.howMany);
@@ -70,7 +71,7 @@ function makePurchase(itemNo, itemQuantity){
 
         if(itemQuantity > currentStock){
             clear();
-            console.log("\nInsufficent Stock Available!!!\n");
+            console.log(colors.bold.red("\nInsufficent Stock Available!!!\n"));
             main();
         }else{
             connection.query("UPDATE products SET ? WHERE ?",
@@ -84,7 +85,7 @@ function makePurchase(itemNo, itemQuantity){
             ],(err, resp) => {
                 if (err) throw err;
                 clear();
-                console.log(`\nYou have just purchased (${itemQuantity}) x ${productName}\n`);
+                console.log(colors.bold.green(`\nYou have just purchased (${itemQuantity}) x ${productName}\n`));
                 main();
             });
         }

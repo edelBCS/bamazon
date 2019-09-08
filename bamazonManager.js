@@ -27,20 +27,30 @@ function main(){
             name: "managerMenu",
             type: "list",
             message: "Select Option: ",
-            choices: ["View Product for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Quit"]
+            choices: ["View Product for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Delete Product", "Quit"]
         }
     ]).then(resp => {
         switch(resp.managerMenu){
             case "View Product for Sale":
-                displayAllProducts();
+                clear();
+                displayAllProducts(main);
                 break;
             case "View Low Inventory":
+                clear();
                 lowInventory();
                 break;
             case "Add to Inventory":
-                addStock();
+                clear();
+                displayAllProducts(addStock);
                 break;
             case "Add New Product":
+                clear();
+                console.log(colors.bold.underline.green("Adding a NEW Product\n"))
+                addProduct();
+                break;
+            case "Delete Product":
+                clear();
+                displayAllProducts(deleteProduct);
                 break;
             case "Quit":
                 process.exit(1);
@@ -51,24 +61,22 @@ function main(){
     });
 }
 
-function displayAllProducts(noMain){
+function displayAllProducts(func){
     connection.query("SELECT * FROM products", (err, resp) => {
         if(err) throw err;
-        clear();
         console.log(colors.bgWhite.blue.bold.underline("\n  List of ALL Available Products  "));
         resp.forEach(element => {
             console.log(`${element.item_id}) ${element.product_name} - $${element.price}`);
         });
 
         console.log("\n");
-        main();
+        func();
     });
 }
 
 function lowInventory(){
     connection.query("SELECT * FROM products WHERE stock_quantity < 5", (err, resp) => {
         if(err) throw err;
-        clear();
         console.log(colors.red.bold("\nLow Inventory Items:"));
         resp.forEach(element => {
             console.log(`${element.item_id}) ${element.product_name} - Stock Amt: ${element.stock_quantity}`)
@@ -79,6 +87,7 @@ function lowInventory(){
 }
 
 function addStock(){
+    
     inquirer.prompt([
         {
             name: "prod_id",
@@ -103,12 +112,97 @@ function addStock(){
                     `UPDATE products SET stock_quantity = stock_quantity + ${resp2.unitsToAdd} WHERE item_id = '${resp1.prod_id}'`,
                     (err, data) => {
                         if (err) throw err;
-                        console.log(data.affectedRows + " products updated!\n");
+                        clear();
+                        console.log(colors.bold.yellow(data.affectedRows + " products updated!\n" + resp2.unitsToAdd + " unit(s) added to Product ID " + resp1.prod_id + "\n\n"));
                         main();
                     }
                 );
             });
         }
     });
+}
+
+function addProduct(){    
+    connection.query(`SELECT DISTINCT department_name FROM products`, (err, deptQry) => {
+        if(err) throw err;
+
+        var departments = []
+
+        deptQry.forEach(element => {
+            departments.push(element.department_name);
+        });
+
+        inquirer.prompt([
+            {
+                name: "prodName",
+                type: "input",
+                message: "What is the Product Name: "
+            },
+            {
+                name: "deptName",
+                type: "list",
+                message: "What department does this product belong to?",
+                choices: departments
+            },
+            {
+                name: "stockLvl",
+                type: "input",
+                message: "How many units are being added to the inventory: ",
+            },
+            {
+                name: "price",
+                type: "input",
+                message: "Enter the price of this product:"
+            },
+        ]).then(resp => {
+            connection.query(
+                `INSERT INTO products SET ?`,
+                {
+                    product_name: resp.prodName,
+                    department_name: resp.deptName,
+                    stock_quantity: resp.stockLvl,
+                    price: resp.price
+                },
+                (err, res) => {
+                    if(err) throw err;
+                    console.log("\n" + res.affectedRows + " product inserted into inventory!\n");
+                    main();
+                }
+            );
+        });
+    });   
+}
+
+function deleteProduct(){
+    inquirer.prompt([
+        {
+            name: "del_item",
+            type: "input",
+            message: "Enter the ID NO of the product that you would like to DELETE: "
+        }
+    ]).then(resp => {
+        if(isNaN(parseInt(resp.del_item))){
+            clear();
+            console.log(colors.bold.red("\nINVALID PRODUCT ID, Try Again!\n"))
+            displayAllProducts(deleteProduct);
+        }else{
+            connection.query(
+                `DELETE FROM products WHERE ?`,
+                {
+                    item_id: resp.del_item
+                },
+                (err, res) => {
+                    if(err) throw err;
+
+                    clear();
+                    if(res.affectedRows === 0){
+                        console.log(colors.bold.red("No item found with ID " + resp.del_item));
+                    }
+                    console.log(colors.bold.yellow(res.affectedRows + " products deleted!\n"));
+                    main();
+                }
+            )
+        }
+    });    
 }
 

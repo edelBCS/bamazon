@@ -63,11 +63,13 @@ function promptCust(){
 }
 
 function makePurchase(itemNo, itemQuantity){
-    connection.query(`SELECT stock_quantity, product_name FROM products WHERE item_id = '${itemNo}'`, (err, resp) => {
+    connection.query(`SELECT stock_quantity, product_name, product_sales, price FROM products WHERE item_id = '${itemNo}'`, (err, resp) => {
         if(err) throw err;
 
         var currentStock = resp[0].stock_quantity;
         var productName = resp[0].product_name;
+        var productSales = resp[0].product_sales;
+        var productCost = resp[0].price;
 
         if(itemQuantity > currentStock){
             clear();
@@ -77,15 +79,17 @@ function makePurchase(itemNo, itemQuantity){
             connection.query("UPDATE products SET ? WHERE ?",
             [
                 {
-                    stock_quantity: currentStock - itemQuantity
+                    stock_quantity: currentStock - itemQuantity,
+                    product_sales: productSales + (productCost * itemQuantity)
                 },
                 {
                     item_id: itemNo
                 }
-            ],(err, resp) => {
+            ],(err, res) => {
                 if (err) throw err;
                 clear();
                 console.log(colors.bold.green(`\nYou have just purchased (${itemQuantity}) x ${productName}\n`));
+                console.log(colors.bold.yellow(`${res.affectedRows} product(s) has been updated!`))
                 main();
             });
         }

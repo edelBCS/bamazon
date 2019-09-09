@@ -27,11 +27,11 @@ function main(){
             name: "managerMenu",
             type: "list",
             message: "Select Option: ",
-            choices: ["View Product for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Delete Product", "Quit"]
+            choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Delete Product", "Quit"]
         }
     ]).then(resp => {
         switch(resp.managerMenu){
-            case "View Product for Sale":
+            case "View Products for Sale":
                 clear();
                 displayAllProducts(main);
                 break;
@@ -57,6 +57,7 @@ function main(){
                 break;
             default:
                 console.log("Invalid Selection!")
+                main();
         }
     });
 }
@@ -66,7 +67,7 @@ function displayAllProducts(func){
         if(err) throw err;
         console.log(colors.bgWhite.blue.bold.underline("\n  List of ALL Available Products  "));
         resp.forEach(element => {
-            console.log(`${element.item_id}) ${element.product_name} - $${element.price}`);
+            console.log(`${element.item_id}) ${element.product_name} - $${element.price} (${element.stock_quantity} unit(s) in stock)`);
         });
 
         console.log("\n");

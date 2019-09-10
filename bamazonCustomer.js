@@ -44,20 +44,31 @@ function promptCust(){
         {
             name: "whatToBuy",
             type: "input",
-            message: "Enter the No. of the item you would like to purchase" + colors.gray(" ([CRTL]+[C] to quit): ")
-        },
-        {
-            name: "howMany",
-            type: "input",
-            message: "Enter purchase quantity: "
+            message: "Enter the No. of the item you would like to purchase" + colors.gray(" (Enter[q] to quit): ")
         }
-    ]).then(resp => {
-        if (isNaN(parseInt(resp.whatToBuy)) || isNaN(parseInt(resp.howMany))){
+    ]).then(ans1 => {
+        if(ans1.whatToBuy === "q" || ans1.whatToBuy === "Q")
+            process.exit(1);
+        else if (isNaN(parseInt(ans1.whatToBuy))){
             clear();
             console.log(colors.bold.bgYellow.red("\n\n************************\nInvalid Selection/Entry!\n************************\n"));
             main();
         }else{
-            makePurchase(resp.whatToBuy, resp.howMany);
+            inquirer.prompt([
+                {
+                    name: "howMany",
+                    type: "input",
+                    message: "How many unit would do you want to buy? "
+                }
+            ]).then(ans2 => {
+                if (isNaN(parseInt(ans2.howMany))){
+                    clear();
+                    console.log(colors.bold.bgYellow.red("\n\n************************\nInvalid Selection/Entry!\n************************\n"));
+                    main();
+                }else{
+                    makePurchase(ans1.whatToBuy, ans2.howMany);
+                }
+            });
         }
     });
 }

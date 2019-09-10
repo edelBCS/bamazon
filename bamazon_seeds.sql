@@ -11,3 +11,4 @@ INSERT INTO products (product_name, department_name, price, stock_quantity, prod
 ("Mystery Box", "Misc", 100.00, 1, 0.00);
 
 SELECT * FROM products;
+SELECT * FROM departments;

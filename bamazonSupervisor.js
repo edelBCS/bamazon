@@ -48,6 +48,7 @@ function salesByDept() {
                     "FROM products RIGHT JOIN departments " +
                     "ON products.department_name = departments.department_name " +
                     "GROUP BY department_name";
+                    
     connection.query(deptQry, (err, resp) => {
         if (err) throw err;
 

@@ -5,17 +5,9 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 var clear = require("clear");
 var colors = require("colors");
-const {
-    table
-} = require('table');
+const {table} = require('table');
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: dbAuth.mysqlAuth.user,
-    password: dbAuth.mysqlAuth.password,
-    database: "bamazon"
-});
+var connection = mysql.createConnection(dbAuth.mysqlAuth);
 
 connection.connect(err => {
     if (err) throw err;
@@ -33,7 +25,7 @@ function main() {
     }]).then(resp => {
         switch (resp.supervisorMenu) {
             case "View Product Sales by Department":
-                //clear();
+                clear();
                 salesByDept();
                 break;
             case "Create New Department":
@@ -51,10 +43,12 @@ function main() {
 }
 
 function salesByDept() {
-    var config;
     var data = [["Dept. ID", "Dept. Name", "Total Sales", "Overhead", "Total_Profit"]];
-
-    connection.query("SELECT departments.department_id, departments.department_name, SUM(products.product_sales) AS totalProduct_sales, departments.over_head_costs FROM products RIGHT JOIN departments ON products.department_name = departments.department_name GROUP BY department_name", (err, resp) => {
+    var deptQry = "SELECT departments.department_id, departments.department_name, SUM(products.product_sales) AS totalProduct_sales, departments.over_head_costs " +
+                    "FROM products RIGHT JOIN departments " +
+                    "ON products.department_name = departments.department_name " +
+                    "GROUP BY department_name";
+    connection.query(deptQry, (err, resp) => {
         if (err) throw err;
 
         resp.forEach(element => {
@@ -66,7 +60,6 @@ function salesByDept() {
             temp.push(element.totalProduct_sales - element.over_head_costs);
             data.push(temp);
         });
-        clear();
         console.log(colors.bold.green("\nSales Data by Department"));
         console.log(table(data))
         main();

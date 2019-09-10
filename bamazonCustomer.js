@@ -6,13 +6,9 @@ var inquirer = require("inquirer");
 var clear = require("clear");
 var colors = require("colors");
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: dbAuth.mysqlAuth.user,
-    password: dbAuth.mysqlAuth.password,
-    database: "bamazon"
-});
+
+
+var connection = mysql.createConnection(dbAuth.mysqlAuth);
 
 connection.connect(err => {
     if(err) throw err;

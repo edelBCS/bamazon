@@ -6,13 +6,7 @@ var inquirer = require("inquirer");
 var clear = require("clear");
 var colors = require("colors");
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: dbAuth.mysqlAuth.user,
-    password: dbAuth.mysqlAuth.password,
-    database: "bamazon"
-});
+var connection = mysql.createConnection(dbAuth.mysqlAuth);
 
 connection.connect(err => {
     if(err) throw err;
@@ -124,7 +118,7 @@ function addStock(){
 }
 
 function addProduct(){    
-    connection.query(`SELECT DISTINCT department_name FROM products`, (err, deptQry) => {
+    connection.query(`SELECT department_name FROM departments`, (err, deptQry) => {
         if(err) throw err;
 
         var departments = []
@@ -162,7 +156,8 @@ function addProduct(){
                     product_name: resp.prodName,
                     department_name: resp.deptName,
                     stock_quantity: resp.stockLvl,
-                    price: resp.price
+                    price: resp.price,
+                    product_sales: 0
                 },
                 (err, res) => {
                     if(err) throw err;

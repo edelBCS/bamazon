@@ -20,8 +20,8 @@ This Store contains a MySQL Database that contains Products and Store Department
 6. Run `npm i` to install neccessary node packages
 7. Run one of the following commands:
     1. `node bamazonCustomer.js` - Runs the [Customer App](#cust-app)
-    2. `node bamazonManager.js` - Runs the Manager Interface
-    3. `node bamazonSupervisor.js` - Runs the Supervisor Interface
+    2. `node bamazonManager.js` - Runs the [Manager App](#man-app)
+    3. `node bamazonSupervisor.js` - Runs the [Supervisor Interface](#sup-app)
     
 ## Usage
 ### <a name="cust-app"></a>Customer App
@@ -31,7 +31,7 @@ The user is then prompted to enter the product number of the item they want to p
 
 If there is not enough stock to fullful the order, a message is displayed to the user, otherwise the order if fulfilled and subtrackted from the inventory.
 
-### Manager App
+### <a name="man-app"></a>Manager App
 The Manager Ap allows a store manager to:
 * View Products for Sale
 * View any Products that have low inventory
@@ -39,7 +39,7 @@ The Manager Ap allows a store manager to:
 * Add a new Product
 * Delete a product
 
-### Supervisor App
+### <a name="sup-app"></a>Supervisor App
 The Supervisor App has the following features:
 * View sales and profits by Department
 * Create a new Department

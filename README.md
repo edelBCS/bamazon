@@ -19,11 +19,12 @@ This Store contains a MySQL Database that contains Products and Store Department
 5. Execute the contents of *bamazon_seeds.sql* to create inital data in DB
 6. Run `npm i` to install neccessary node packages
 7. Run one of the following commands:
-  a. `node bamazonCustomer.js` - Runs the Customer interface
-  b. `node bamazonManager.js` - Runs the Manager Interface
-  c. `node bamazonSupervisor.js` - Runs the Supervisor Interface
+    1. `node bamazonCustomer.js` - Runs the [Customer App](#cust-app)
+    2. `node bamazonManager.js` - Runs the Manager Interface
+    3. `node bamazonSupervisor.js` - Runs the Supervisor Interface
+    
 ## Usage
-### Customer App
+### <a name="cust-app"></a>Customer App
 When the customer app is run it will print a list of Products in from the database that are for sale, along with it's price. 
 
 The user is then prompted to enter the product number of the item they want to purchase, then to enter how many units of that Product they would like to purchase.

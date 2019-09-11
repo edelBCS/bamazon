@@ -20,3 +20,9 @@ CREATE TABLE departments(
     over_head_costs DEC(10, 2) NOT NULL,
     PRIMARY KEY (department_id)
 );
+
+/*
+The following command may need to be run if the following error is thrown "...this is incompatible with sql_mode=only_full_group_by"
+
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+*/

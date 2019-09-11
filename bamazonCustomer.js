@@ -96,7 +96,7 @@ function makePurchase(itemNo, itemQuantity){
                 if (err) throw err;
                 clear();
                 console.log(colors.bold.green(`\nYou have just purchased (${itemQuantity}) x ${productName}\n`));
-                console.log(colors.bold.yellow(`${res.affectedRows} product(s) has been updated!`))
+                console.log(colors.bold.yellow(`${res.affectedRows} product(s) has been updated!\n`))
                 main();
             });
         }

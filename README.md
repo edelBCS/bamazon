@@ -22,14 +22,14 @@ This Store contains a MySQL Database that contains Products and Store Department
 
 ## Usage
 ### Customer App
-When the customer app is run it will print a list of Product in from the database that are for sale. 
+When the customer app is run it will print a list of Products in from the database that are for sale, along with it's price. 
 
-The user is prompted to enter the number of the item they want to purchase, then prompted to enter how many unit of that Product they would like to purchase.
+The user is then prompted to enter the product number of the item they want to purchase, then to enter how many units of that Product they would like to purchase.
 
-If there is not enough stock to fullful the order, a message is displayed to the user
+If there is not enough stock to fullful the order, a message is displayed to the user, otherwise the order if fulfilled and subtrackted from the inventory.
 
 ### Manager App
-This app allows a store manager to:
+The Manager Ap allows a store manager to:
 * View Products for Sale
 * View any Products that have low inventory
 * Add more Inventory to existing Products
@@ -37,3 +37,6 @@ This app allows a store manager to:
 * Delete a product
 
 ### Supervisor App
+The Supervisor App has the following features:
+* View sales and profits by Department
+* Create a new Department

@@ -29,7 +29,7 @@ When the customer app is run it will print a list of Products in from the databa
 
 The user is then prompted to enter the product number of the item they want to purchase, then to enter how many units of that Product they would like to purchase.
 
-If there is not enough stock to fullful the order, a message is displayed to the user, otherwise the order if fulfilled and subtrackted from the inventory.
+If there is not enough stock to fullful the order, a message is displayed to the user, otherwise the order if fulfilled and subtracted from the inventory. Then the user is returned to the main menu to make other purchase or quit.
 
 ### <a name="man-app"></a>Manager App
 The Manager Ap allows a store manager to:

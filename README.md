@@ -1,9 +1,9 @@
 # BAMAZON
 #### A CLI Amazon style app...sort of?!?
 This Store contains a MySQL Database that contains Products and Store Departments. The Store is made up of 3 different apps:
-* Customer App
-* Manager App
-* Supervisor App
+* [Customer App](#cust-app)
+* [Manager App](#man-app)
+* [Supervisor Interface](#sup-app)
 
 ## Installation
 ### Requirements
@@ -11,7 +11,7 @@ This Store contains a MySQL Database that contains Products and Store Department
 * MySQL Workbench(optional)
 * Node.js
 
-## Setup
+### Setup
 1. Clone repo locally to your machine
 2. Rename the sample.env -> .env
 3. Edit the .env file and fill out relevant database info

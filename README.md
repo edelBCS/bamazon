@@ -37,24 +37,24 @@ If there is not enough stock to fullful the order, a message is displayed to the
 The Manager Ap allows a store manager to:
 * View Products for Sale
 
-![ManMain](images/ManSale)
+![ManMain](images/ManSale.png)
 
 * View any Products that have low inventory
 * Add more Inventory to existing Products
 * Add a new Product
 
-![ManAdd](images/ManAdd)
+![ManAdd](images/ManAdd.png)
 
 * Delete a product
 
-![ManDel](images/ManDel)
+![ManDel](images/ManDel.png)
 
 ### <a name="sup-app"></a>Supervisor App
 The Supervisor App has the following features:
 * View sales and profits by Department
 
-![SupDept](images/SupDept)
+![SupDept](images/SupDept.png)
 
 * Create a new Department
 
-![SupNew](images/SupNew)
+![SupNew](images/SupNew.png)
